@@ -1,7 +1,7 @@
 import TelegramBot from 'node-telegram-bot-api';
 import axios from 'axios';
 
-const BOT_TOKEN = '8249167716:AAHraeE1I30djS1slyMUs7BauQZFaEtaVxI';
+const BOT_TOKEN = '8563563429:AAGLW_hCpbeC2-JfStd_bveMWiBsaTaOh-E';
 const ADMIN_CHAT_ID = 5328767896;
 
 const userSessions: Map<number, string> = new Map();

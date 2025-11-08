@@ -1,4 +1,4 @@
-import { useAuth } from "@/_core/hooks/useAuth";
+import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { APP_TITLE } from "@/const";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ export default function Home() {
   const [stats, setStats] = useState({
     activeSessions: 0,
     version: "5.0.0",
-    browserStatus: "✅ 𝙊𝙣𝙡𝙞𝙣𝙚"
+    browserStatus: "✅ Online"
   });
   const [liveEvents, setLiveEvents] = useState<string[]>([]);
 
@@ -19,7 +19,7 @@ export default function Home() {
         setStats({
           activeSessions: data.activeSessions || 0,
           version: data.version || "5.0.0",
-          browserStatus: data.browserRunning ? "✅ 𝙊𝙣𝙡𝙞𝙣𝙚" : "❌ 𝙊𝙛𝙛𝙡𝙞𝙣𝙚"
+          browserStatus: data.browserRunning ? "✅ Online" : "❌ Offline"
         });
       })
       .catch(() => {});
@@ -35,84 +35,93 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-green-400 overflow-x-hidden">
-      <div className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-90 animate-gradient-slow -z-10"></div>
-      
-      <div className="container mx-auto px-4 py-8 relative z-10">
-        <header className="text-center py-12 border-b-2 border-green-500 mb-12">
-          <div className="text-9xl mb-6 animate-pulse-slow">🔨</div>
-          <h1 className="text-6xl font-bold mb-4 animate-glow-rgb bg-gradient-to-r from-green-400 via-cyan-400 to-green-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
-            {APP_TITLE}
-          </h1>
-          <p className="text-2xl text-cyan-400 glow-text mb-6">
-            ⚡ 𝙋𝙧𝙤𝙛𝙚𝙨𝙨𝙞𝙤𝙣𝙖𝙡 𝘼𝙄-𝙋𝙤𝙬𝙚𝙧𝙚𝙙 𝘽𝙧𝙤𝙬𝙨𝙚𝙧 𝘼𝙪𝙩𝙤𝙢𝙖𝙩𝙞𝙤𝙣 𝙎𝙚𝙧𝙫𝙞𝙘𝙚 ⚡
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white overflow-x-hidden">
+      <div className="container mx-auto px-4 py-6 md:py-12 max-w-7xl">
+        {/* Header Section */}
+        <header className="text-center mb-8 md:mb-16">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="text-6xl md:text-8xl animate-bounce-slow">🔨</div>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-cyan-400 via-green-400 to-cyan-400 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+              Hammer Automation AI
+            </h1>
+          </div>
+          <p className="text-lg md:text-2xl text-green-400 mb-6 px-4">
+            ⚡ Professional AI-Powered Browser Automation Service ⚡
           </p>
+          
+          {/* Telegram Link */}
           <a 
             href="https://t.me/developer_hammer" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-green-500 to-cyan-500 text-black font-bold text-xl rounded-full hover:scale-110 transition-transform shadow-[0_0_30px_rgba(0,255,0,0.5)] hover:shadow-[0_0_50px_rgba(0,255,0,0.8)]"
+            className="inline-flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold text-lg md:text-xl rounded-full hover:scale-105 transition-all shadow-lg hover:shadow-cyan-500/50"
           >
-            📱 @𝙙𝙚𝙫𝙚𝙡𝙤𝙥𝙚𝙧_𝙝𝙖𝙢𝙢𝙚𝙧
+            <svg className="w-6 h-6 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+            </svg>
+            @developer_hammer
           </a>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="stat-card bg-black/40 border-2 border-green-500 rounded-2xl p-8 text-center hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,255,0,0.3)] hover:shadow-[0_0_40px_rgba(0,255,0,0.5)]">
-            <div className="text-5xl font-bold text-green-400 glow-text mb-2">{stats.activeSessions}</div>
-            <div className="text-lg text-cyan-400">📊 𝘼𝙘𝙩𝙞𝙫𝙚 𝙎𝙚𝙨𝙨𝙞𝙤𝙣𝙨</div>
+        {/* Stats Section */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12 px-2">
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-green-500/30 rounded-xl p-4 md:p-6 text-center hover:scale-105 transition-transform shadow-lg">
+            <div className="text-4xl md:text-5xl font-bold text-green-400 mb-2">{stats.activeSessions}</div>
+            <div className="text-sm md:text-base text-gray-300">📊 Active Sessions</div>
           </div>
-          <div className="stat-card bg-black/40 border-2 border-green-500 rounded-2xl p-8 text-center hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,255,0,0.3)] hover:shadow-[0_0_40px_rgba(0,255,0,0.5)]">
-            <div className="text-5xl font-bold text-green-400 glow-text mb-2">{stats.version}</div>
-            <div className="text-lg text-cyan-400">🚀 𝙑𝙚𝙧𝙨𝙞𝙤𝙣</div>
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-green-500/30 rounded-xl p-4 md:p-6 text-center hover:scale-105 transition-transform shadow-lg">
+            <div className="text-4xl md:text-5xl font-bold text-green-400 mb-2">{stats.version}</div>
+            <div className="text-sm md:text-base text-gray-300">🚀 Version</div>
           </div>
-          <div className="stat-card bg-black/40 border-2 border-green-500 rounded-2xl p-8 text-center hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,255,0,0.3)] hover:shadow-[0_0_40px_rgba(0,255,0,0.5)]">
-            <div className="text-3xl font-bold text-green-400 glow-text mb-2">{stats.browserStatus}</div>
-            <div className="text-lg text-cyan-400">💚 𝘽𝙧𝙤𝙬𝙨𝙚𝙧 𝙎𝙩𝙖𝙩𝙪𝙨</div>
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-green-500/30 rounded-xl p-4 md:p-6 text-center hover:scale-105 transition-transform shadow-lg">
+            <div className="text-2xl md:text-3xl font-bold text-green-400 mb-2">{stats.browserStatus}</div>
+            <div className="text-sm md:text-base text-gray-300">💚 Browser Status</div>
           </div>
         </div>
 
-        <section className="mb-12">
-          <h2 className="text-4xl font-bold text-center mb-8 text-green-400 glow-text">
-            🔧 𝘼𝙄 𝘼𝙪𝙩𝙤𝙢𝙖𝙩𝙞𝙤𝙣 𝙁𝙚𝙖𝙩𝙪𝙧𝙚𝙨
+        {/* Features Section */}
+        <section className="mb-8 md:mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 md:mb-8 text-green-400">
+            🔧 AI Automation Features
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 px-2">
             {[
-              { icon: "🌐", title: "𝙊𝙥𝙚𝙣 𝙒𝙚𝙗 𝘽𝙧𝙤𝙬𝙨𝙚𝙧", desc: "𝙊𝙥𝙚𝙣 𝙖𝙣𝙙 𝙘𝙤𝙣𝙩𝙧𝙤𝙡 𝙗𝙧𝙤𝙬𝙨𝙚𝙧 𝙨𝙚𝙨𝙨𝙞𝙤𝙣𝙨" },
-              { icon: "🖱️", title: "𝘾𝙡𝙞𝙘𝙠 𝘼𝙩", desc: "𝘾𝙡𝙞𝙘𝙠 𝙤𝙣 𝙨𝙥𝙚𝙘𝙞𝙛𝙞𝙘 𝙘𝙤𝙤𝙧𝙙𝙞𝙣𝙖𝙩𝙚𝙨" },
-              { icon: "🎯", title: "𝙃𝙤𝙫𝙚𝙧 𝘼𝙩", desc: "𝙃𝙤𝙫𝙚𝙧 𝙤𝙫𝙚𝙧 𝙚𝙡𝙚𝙢𝙚𝙣𝙩𝙨" },
-              { icon: "✍️", title: "𝙏𝙮𝙥𝙚 𝙏𝙚𝙭𝙩 𝘼𝙩", desc: "𝙏𝙮𝙥𝙚 𝙩𝙚𝙭𝙩 𝙖𝙩 𝙘𝙤𝙤𝙧𝙙𝙞𝙣𝙖𝙩𝙚𝙨" },
-              { icon: "📜", title: "𝙎𝙘𝙧𝙤𝙡𝙡 𝘿𝙤𝙘𝙪𝙢𝙚𝙣𝙩", desc: "𝙎𝙘𝙧𝙤𝙡𝙡 𝙞𝙣 𝙖𝙡𝙡 𝙙𝙞𝙧𝙚𝙘𝙩𝙞𝙤𝙣𝙨" },
-              { icon: "⏸️", title: "𝙒𝙖𝙞𝙩 5 𝙎𝙚𝙘𝙤𝙣𝙙𝙨", desc: "𝙋𝙖𝙪𝙨𝙚 𝙚𝙭𝙚𝙘𝙪𝙩𝙞𝙤𝙣" },
-              { icon: "◀️", title: "𝙂𝙤 𝘽𝙖𝙘𝙠", desc: "𝙉𝙖𝙫𝙞𝙜𝙖𝙩𝙚 𝙗𝙖𝙘𝙠𝙬𝙖𝙧𝙙" },
-              { icon: "▶️", title: "𝙂𝙤 𝙁𝙤𝙧𝙬𝙖𝙧𝙙", desc: "𝙉𝙖𝙫𝙞𝙜𝙖𝙩𝙚 𝙛𝙤𝙧𝙬𝙖𝙧𝙙" },
-              { icon: "🔍", title: "𝙎𝙚𝙖𝙧𝙘𝙝", desc: "𝙊𝙥𝙚𝙣 𝙨𝙚𝙖𝙧𝙘𝙝 𝙚𝙣𝙜𝙞𝙣𝙚" },
-              { icon: "🧭", title: "𝙉𝙖𝙫𝙞𝙜𝙖𝙩𝙚", desc: "𝙂𝙤 𝙩𝙤 𝙨𝙥𝙚𝙘𝙞𝙛𝙞𝙘 𝙐𝙍𝙇" },
-              { icon: "⌨️", title: "𝙆𝙚𝙮 𝘾𝙤𝙢𝙗𝙞𝙣𝙖𝙩𝙞𝙤𝙣", desc: "𝙋𝙧𝙚𝙨𝙨 𝙠𝙚𝙮𝙗𝙤𝙖𝙧𝙙 𝙨𝙝𝙤𝙧𝙩𝙘𝙪𝙩𝙨" },
-              { icon: "🎪", title: "𝘿𝙧𝙖𝙜 & 𝘿𝙧𝙤𝙥", desc: "𝘿𝙧𝙖𝙜 𝙚𝙡𝙚𝙢𝙚𝙣𝙩𝙨 𝙖𝙧𝙤𝙪𝙣𝙙" }
+              { icon: "🌐", title: "Open Browser", desc: "Control browser sessions" },
+              { icon: "🖱️", title: "Click At", desc: "Click coordinates" },
+              { icon: "🎯", title: "Hover At", desc: "Hover elements" },
+              { icon: "✍️", title: "Type Text", desc: "Type at coordinates" },
+              { icon: "📜", title: "Scroll", desc: "Scroll in all directions" },
+              { icon: "⏸️", title: "Wait", desc: "Pause execution" },
+              { icon: "◀️", title: "Go Back", desc: "Navigate backward" },
+              { icon: "▶️", title: "Go Forward", desc: "Navigate forward" },
+              { icon: "🔍", title: "Search", desc: "Open search engine" },
+              { icon: "🧭", title: "Navigate", desc: "Go to specific URL" },
+              { icon: "⌨️", title: "Key Press", desc: "Keyboard shortcuts" },
+              { icon: "🎪", title: "Drag & Drop", desc: "Drag elements" }
             ].map((feature, idx) => (
-              <div key={idx} className="bg-black/40 border-2 border-green-500 rounded-xl p-6 hover:scale-105 transition-transform shadow-[0_0_15px_rgba(0,255,0,0.2)] hover:shadow-[0_0_30px_rgba(0,255,0,0.4)]">
-                <div className="text-5xl mb-3">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-green-400 mb-2">{feature.title}</h3>
-                <p className="text-cyan-400">{feature.desc}</p>
+              <div key={idx} className="bg-gradient-to-br from-gray-800 to-gray-900 border border-green-500/30 rounded-lg p-3 md:p-4 hover:scale-105 transition-transform shadow-lg text-center">
+                <div className="text-3xl md:text-4xl mb-2">{feature.icon}</div>
+                <h3 className="text-sm md:text-base font-bold text-green-400 mb-1">{feature.title}</h3>
+                <p className="text-xs text-gray-400 hidden md:block">{feature.desc}</p>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="mb-12">
-          <h2 className="text-4xl font-bold text-center mb-8 text-green-400 glow-text">
-            📡 𝙇𝙞𝙫𝙚 𝙎𝙩𝙧𝙚𝙖𝙢 𝙈𝙤𝙣𝙞𝙩𝙤𝙧
+        {/* Live Stream Section */}
+        <section className="mb-8 md:mb-12 px-2">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 md:mb-8 text-green-400">
+            📡 Live Stream Monitor
           </h2>
-          <div className="bg-black/60 border-2 border-green-500 rounded-xl p-6 shadow-[0_0_30px_rgba(0,255,0,0.3)] max-h-96 overflow-y-auto">
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-green-500/30 rounded-xl p-4 md:p-6 shadow-lg max-h-64 md:max-h-96 overflow-y-auto">
             {liveEvents.length === 0 ? (
-              <div className="text-center text-cyan-400 py-8">
-                ⏳ 𝙒𝙖𝙞𝙩𝙞𝙣𝙜 𝙛𝙤𝙧 𝙡𝙞𝙫𝙚 𝙚𝙫𝙚𝙣𝙩𝙨...
+              <div className="text-center text-gray-400 py-6 md:py-8">
+                ⏳ Waiting for live events...
               </div>
             ) : (
               <div className="space-y-2">
                 {liveEvents.map((event, idx) => (
-                  <div key={idx} className="text-green-400 font-mono text-sm p-2 bg-black/40 rounded border-l-4 border-cyan-500 animate-fade-in">
+                  <div key={idx} className="text-green-400 font-mono text-xs md:text-sm p-2 bg-black/40 rounded border-l-4 border-cyan-500 animate-fade-in">
                     ▶ {event}
                   </div>
                 ))}
@@ -121,28 +130,33 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="text-center">
-          <h2 className="text-4xl font-bold mb-6 text-green-400 glow-text">
-            🚀 𝙍𝙚𝙖𝙙𝙮 𝙩𝙤 𝘼𝙪𝙩𝙤𝙢𝙖𝙩𝙚?
+        {/* CTA Section */}
+        <section className="text-center mb-8 px-2">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-green-400">
+            🚀 Ready to Automate?
           </h2>
-          <p className="text-xl text-cyan-400 mb-8">
-            ⚡ 𝙐𝙨𝙚 𝙤𝙪𝙧 𝘼𝙋𝙄 𝙤𝙧 𝙏𝙚𝙡𝙚𝙜𝙧𝙖𝙢 𝘽𝙤𝙩 𝙛𝙤𝙧 𝙛𝙪𝙡𝙡 𝙘𝙤𝙣𝙩𝙧𝙤𝙡 ⚡
+          <p className="text-base md:text-xl text-gray-300 mb-6 md:mb-8">
+            ⚡ Use our API for full control ⚡
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
-              className="px-8 py-6 text-xl bg-gradient-to-r from-green-500 to-cyan-500 text-black font-bold rounded-full hover:scale-110 transition-transform shadow-[0_0_20px_rgba(0,255,0,0.5)]"
+              className="px-6 py-4 md:px-8 md:py-6 text-base md:text-xl bg-gradient-to-r from-green-500 to-cyan-500 text-white font-bold rounded-full hover:scale-105 transition-all shadow-lg"
               onClick={() => window.location.href = '/api/docs'}
             >
-              📚 𝘼𝙋𝙄 𝘿𝙤𝙘𝙪𝙢𝙚𝙣𝙩𝙖𝙩𝙞𝙤𝙣
-            </Button>
-            <Button 
-              className="px-8 py-6 text-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-black font-bold rounded-full hover:scale-110 transition-transform shadow-[0_0_20px_rgba(0,255,255,0.5)]"
-              onClick={() => window.open('https://t.me/developer_hammer', '_blank')}
-            >
-              💬 𝙏𝙚𝙡𝙚𝙜𝙧𝙖𝙢 𝘽𝙤𝙩
+              📚 API Documentation
             </Button>
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className="text-center py-6 border-t border-gray-700 mt-8">
+          <p className="text-gray-400 text-sm md:text-base mb-2">
+            © 2025 Hammer Automation AI. All rights reserved.
+          </p>
+          <p className="text-gray-500 text-xs md:text-sm">
+            Made with ❤️ by <span className="text-green-400 font-semibold">Hammer</span>
+          </p>
+        </footer>
       </div>
 
       <style>{`
@@ -151,14 +165,9 @@ export default function Home() {
           50% { background-position: 100% 50%; }
         }
         
-        @keyframes gradient-slow {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        
-        @keyframes pulse-slow {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
         }
         
         @keyframes fade-in {
@@ -170,20 +179,12 @@ export default function Home() {
           animation: gradient 3s linear infinite;
         }
         
-        .animate-gradient-slow {
-          animation: gradient-slow 15s ease infinite;
-        }
-        
-        .animate-pulse-slow {
-          animation: pulse-slow 2s ease-in-out infinite;
+        .animate-bounce-slow {
+          animation: bounce-slow 2s ease-in-out infinite;
         }
         
         .animate-fade-in {
           animation: fade-in 0.5s ease-out;
-        }
-        
-        .glow-text {
-          text-shadow: 0 0 10px rgba(0, 255, 0, 0.8), 0 0 20px rgba(0, 255, 0, 0.6), 0 0 30px rgba(0, 255, 0, 0.4);
         }
       `}</style>
     </div>
