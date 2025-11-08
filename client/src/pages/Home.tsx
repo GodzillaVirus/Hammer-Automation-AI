@@ -49,17 +49,17 @@ export default function Home() {
             ⚡ Professional AI-Powered Browser Automation Service ⚡
           </p>
           
-          {/* Telegram Link */}
+          {/* Telegram Icon */}
           <a 
             href="https://t.me/developer_hammer" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold text-lg md:text-xl rounded-full hover:scale-105 transition-all shadow-lg hover:shadow-cyan-500/50"
+            title="@developer_hammer"
+            className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-full hover:scale-110 transition-all shadow-lg hover:shadow-cyan-500/50"
           >
-            <svg className="w-6 h-6 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
             </svg>
-            @developer_hammer
           </a>
         </header>
 

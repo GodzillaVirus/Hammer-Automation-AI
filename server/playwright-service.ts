@@ -6,11 +6,33 @@ interface Session {
   context: BrowserContext;
   page: Page;
   createdAt: Date;
+  lastActivity: Date;
 }
 
 class PlaywrightService {
   private sessions: Map<string, Session> = new Map();
   private eventListeners: Set<(event: any) => void> = new Set();
+  private cleanupInterval: NodeJS.Timeout;
+
+  constructor() {
+    // Clean up inactive sessions every 5 minutes
+    this.cleanupInterval = setInterval(() => {
+      this.cleanupInactiveSessions();
+    }, 5 * 60 * 1000);
+  }
+
+  private async cleanupInactiveSessions(): Promise<void> {
+    const now = new Date();
+    const maxInactiveTime = 30 * 60 * 1000; // 30 minutes
+
+    for (const [sessionId, session] of this.sessions.entries()) {
+      const inactiveTime = now.getTime() - session.lastActivity.getTime();
+      if (inactiveTime > maxInactiveTime) {
+        console.log(`Cleaning up inactive session: ${sessionId}`);
+        await this.closeSession(sessionId);
+      }
+    }
+  }
 
   async createSession(): Promise<string> {
     const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -44,7 +66,8 @@ class PlaywrightService {
       browser,
       context,
       page,
-      createdAt: new Date()
+      createdAt: new Date(),
+      lastActivity: new Date()
     });
 
     this.broadcastEvent({ type: 'session_created', sessionId, timestamp: new Date().toISOString() });
@@ -193,6 +216,8 @@ class PlaywrightService {
     if (!session) {
       throw new Error(`Session ${sessionId} not found`);
     }
+    // Update last activity time
+    session.lastActivity = new Date();
     return session;
   }
 
