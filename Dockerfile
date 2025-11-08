@@ -51,7 +51,21 @@ RUN pnpm exec playwright install --with-deps chromium
 # 📂 Copy application code
 COPY . .
 
-# 🏗️ Build the application
+# 🔑 Define build arguments for Vite environment variables
+ARG VITE_APP_TITLE
+ARG VITE_APP_LOGO
+ARG VITE_ANALYTICS_ENDPOINT
+ARG VITE_ANALYTICS_WEBSITE_ID
+ARG OAUTH_SERVER_URL
+
+# 🌍 Set environment variables from build args
+ENV VITE_APP_TITLE=$VITE_APP_TITLE
+ENV VITE_APP_LOGO=$VITE_APP_LOGO
+ENV VITE_ANALYTICS_ENDPOINT=$VITE_ANALYTICS_ENDPOINT
+ENV VITE_ANALYTICS_WEBSITE_ID=$VITE_ANALYTICS_WEBSITE_ID
+ENV OAUTH_SERVER_URL=$OAUTH_SERVER_URL
+
+# 🏗️ Build the application with environment variables
 RUN pnpm run build
 
 # 🌐 Expose port
