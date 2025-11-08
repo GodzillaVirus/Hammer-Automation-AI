@@ -35,8 +35,9 @@ RUN apt-get update && apt-get install -y \
 # 📁 Set working directory
 WORKDIR /app
 
-# 📋 Copy package files
+# 📋 Copy package files and patches
 COPY package.json pnpm-lock.yaml ./
+COPY patches ./patches
 
 # 🔧 Install pnpm
 RUN npm install -g pnpm@10.4.1
