@@ -1,7 +1,7 @@
-# Use Node.js 22 as base image
-FROM node:22-slim
+# 🔨 Hammer Automation AI - Dockerfile
+FROM node:22-bookworm-slim
 
-# Install system dependencies including Playwright dependencies
+# 📦 Install system dependencies including Playwright dependencies
 RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
@@ -25,34 +25,39 @@ RUN apt-get update && apt-get install -y \
     libxkbcommon0 \
     libxrandr2 \
     xdg-utils \
+    libglib2.0-0 \
+    libnss3 \
+    libxss1 \
+    libasound2 \
+    fonts-noto-color-emoji \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# 📁 Set working directory
 WORKDIR /app
 
-# Copy package files
+# 📋 Copy package files
 COPY package.json pnpm-lock.yaml ./
 
-# Install pnpm globally
+# 🔧 Install pnpm
 RUN npm install -g pnpm@10.4.1
 
-# Install dependencies
+# 📦 Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Install Playwright browsers
-RUN pnpm exec playwright install chromium
+# 🎭 Install Playwright browsers with dependencies
+RUN pnpm exec playwright install --with-deps chromium
 
-# Copy the rest of the application
+# 📂 Copy application code
 COPY . .
 
-# Build the application
+# 🏗️ Build the application
 RUN pnpm run build
 
-# Expose port
+# 🌐 Expose port
 EXPOSE 8000
 
-# Set environment variable for production
+# 🚀 Set environment to production
 ENV NODE_ENV=production
 
-# Start the application
+# ▶️ Start the application
 CMD ["pnpm", "start"]
