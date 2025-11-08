@@ -143,6 +143,11 @@ async function startServer() {
           res.json({ success: true });
           break;
 
+        case 'close_all':
+          await playwrightService.cleanup();
+          res.json({ success: true, message: 'All sessions closed' });
+          break;
+
         case 'ai_create':
           const aiSessionId = await aiBrowserService.createAISession();
           res.json({ success: true, sessionId: aiSessionId });

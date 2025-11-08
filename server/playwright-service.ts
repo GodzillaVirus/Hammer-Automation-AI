@@ -15,15 +15,15 @@ class PlaywrightService {
   private cleanupInterval: NodeJS.Timeout;
 
   constructor() {
-    // Clean up inactive sessions every 5 minutes
+    // Clean up inactive sessions every 10 seconds
     this.cleanupInterval = setInterval(() => {
       this.cleanupInactiveSessions();
-    }, 5 * 60 * 1000);
+    }, 10 * 1000);
   }
 
   private async cleanupInactiveSessions(): Promise<void> {
     const now = new Date();
-    const maxInactiveTime = 30 * 60 * 1000; // 30 minutes
+    const maxInactiveTime = 30 * 1000; // 30 seconds
 
     for (const [sessionId, session] of this.sessions.entries()) {
       const inactiveTime = now.getTime() - session.lastActivity.getTime();
